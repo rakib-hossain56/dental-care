@@ -7,10 +7,14 @@ import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { syncUser } from "@/lib/actions/users";
 
 
 export default async function Home() {
   const user = await currentUser();
+
+  // The best way of syncing == webhooks
+  await syncUser();
 
   // redirect auth user to dashboard
   if(user) redirect("/dashboard")
